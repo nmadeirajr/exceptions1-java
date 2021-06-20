@@ -35,18 +35,15 @@ public class Programacao_udemy27 {
             System.out.print("Nova data de check-out: ");
             checkout = sdf.parse(teclado.next());
 
-            if (checkin.before(new Date()) || checkout.before(new Date())) {
+            String erro = x.atualizarDatas(checkin, checkout);
+            if (erro != null) {
 
-                System.out.println("Verifique a reserva. Datas não podem ser inferiores à data atual");
-            } else if (!checkout.after(checkin)) {
-
-                System.out.println("Verifique a reserva. A data de Checkout não pode ser inferior à data de Checkin");
-
+                System.out.println("Erro na reserva" + erro);
             } else {
 
-                x.atualizarDatas(checkin, checkout);
                 System.out.println(x);
             }
+
         }
     }
 

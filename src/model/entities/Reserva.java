@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class Reserva {
-    
+
     private Integer numeroQuarto;
     private Date checkIn;
     private Date checkOut;
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
+
     public Reserva() {
     }
 
@@ -36,23 +36,35 @@ public class Reserva {
     public Date getCheckOut() {
         return checkOut;
     }
-    
+
     public long duracao() {
-        
+
         long dif = checkOut.getTime() - checkIn.getTime();
         return TimeUnit.DAYS.convert(dif, TimeUnit.MILLISECONDS);
     }
-    
-    public void atualizarDatas(Date checkIn, Date checkOut) {
+
+    public String atualizarDatas(Date checkIn, Date checkOut) {
+
+        if (checkIn.before(new Date()) || checkOut.before(new Date())) {
+
+            return "Verifique a reserva. Datas não podem ser inferiores à data atual";
+        }
+        
+        if (!checkOut.after(checkIn)) {
+
+            return "Verifique a reserva. A data de Checkout não pode ser inferior à data de Checkin";
+
+        }
         
         this.checkIn = checkIn;
         this.checkOut = checkOut;
-        
+        return null;
+
     }
-    
+
     @Override
     public String toString() {
-        
+
         return "Quarto"
                 + numeroQuarto
                 + ", Check-in: "
